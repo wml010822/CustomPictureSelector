@@ -275,7 +275,6 @@ public final class LocalMediaPageLoader extends IBridgeMediaLoader {
                                 Map<Long, Long> countMap = new HashMap<>();
                                 Set<Long> hashSet = new HashSet<>();
                                 while (data.moveToNext()) {
-                                    // 当isPageSyncAsCount=false&&isFilterSizeDuration=true时没过滤folder数量
                                     LocalMedia media = parseLocalMedia(data, true);
                                     if (media == null) {
                                         continue;
