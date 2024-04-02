@@ -162,6 +162,7 @@ public class PictureSelectorPreviewFragment extends PictureCommonFragment {
     protected List<View> mAnimViews = new ArrayList<>();
 
     private boolean isPause = false;
+    private boolean isEnterWindowFullScreen = false;
 
     public static PictureSelectorPreviewFragment newInstance() {
         PictureSelectorPreviewFragment fragment = new PictureSelectorPreviewFragment();
