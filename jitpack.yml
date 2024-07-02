@@ -4,4 +4,8 @@ before_install:
   - |
     echo "sdk.dir=/opt/android-sdk-linux" > local.properties
     ./gradlew wrapper --gradle-version 7.5
+artifacts:
+  - |
+    build/outputs/aar/*.aar
+    build/libs/*.jar
 
