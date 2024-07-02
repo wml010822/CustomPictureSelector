@@ -1,7 +1,7 @@
 jdk:
   - openjdk11
-install:
-  - echo "sdk.dir=/opt/android-sdk-linux" > local.properties
 before_install:
-  - ./gradlew wrapper --gradle-version 7.5
+  - |
+    echo "sdk.dir=/opt/android-sdk-linux" > local.properties
+    ./gradlew wrapper --gradle-version 7.5
 
