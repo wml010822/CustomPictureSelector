@@ -111,6 +111,12 @@ public class CustomCameraView extends RelativeLayout implements CameraXOrientati
     private ImageAnalysis mImageAnalyzer;
     private VideoCapture mVideoCapture;
 
+    /**
+    * 自定义相机蒙层
+    * */
+    private FaceOverlayView overlayView;
+    private boolean isOverlayOpen = false;
+
     private int displayId = -1;
     /**
      * 相机模式
@@ -275,6 +281,7 @@ public class CustomCameraView extends RelativeLayout implements CameraXOrientati
                 if (!mCameraProvider.isBound(mImageCapture)) {
                     bindCameraImageUseCases();
                 }
+                setOverlayVisibility(false);
                 useCameraCases = LifecycleCameraController.IMAGE_CAPTURE;
                 mCaptureLayout.setButtonCaptureEnabled(false);
                 mSwitchCamera.setVisibility(INVISIBLE);
@@ -406,6 +413,8 @@ public class CustomCameraView extends RelativeLayout implements CameraXOrientati
         mCaptureLayout.setTypeListener(new TypeListener() {
             @Override
             public void cancel() {
+                // 只有当拍照时，需要做关闭
+                setOverlayVisibility(true);
                 onCancelMedia();
             }
 
@@ -447,6 +456,29 @@ public class CustomCameraView extends RelativeLayout implements CameraXOrientati
                 }
             }
         });
+
+        // 添加 OverlayView
+        overlayView = new FaceOverlayView(getContext());
+        LayoutParams overlayParams = new LayoutParams(
+                LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
+        addView(overlayView, overlayParams);
+
+        // 确保 OverlayView 在最上层
+        overlayView.setZ(Float.MAX_VALUE);
+
+        // 设置 OverlayView 不可点击，允许触摸事件穿透
+        overlayView.setClickable(false);
+        overlayView.setFocusable(false);
+        overlayView.setVisibility(INVISIBLE);
+    }
+
+    private void setOverlayVisibility(boolean visible) {
+        if (isOverlayOpen == false) {
+            return;
+        }
+        if (overlayView != null) {
+            overlayView.setVisibility(visible ? View.VISIBLE : View.INVISIBLE);
+        }
     }
 
     private String isMergeExternalStorageState(Activity activity, String outputPath) {
@@ -512,6 +544,8 @@ public class CustomCameraView extends RelativeLayout implements CameraXOrientati
         isManualFocus = extras.getBoolean(SimpleCameraX.EXTRA_MANUAL_FOCUS);
         isZoomPreview = extras.getBoolean(SimpleCameraX.EXTRA_ZOOM_PREVIEW);
         isAutoRotation = extras.getBoolean(SimpleCameraX.EXTRA_AUTO_ROTATION);
+        isOverlayOpen = extras.getBoolean(SimpleCameraX.EXTRA_MARKER_OPEN);
+        setOverlayVisibility(isOverlayOpen);
 
         int recordVideoMaxSecond = extras.getInt(SimpleCameraX.EXTRA_RECORD_VIDEO_MAX_SECOND, CustomCameraConfig.DEFAULT_MAX_RECORD_VIDEO);
         recordVideoMinSecond = extras.getInt(SimpleCameraX.EXTRA_RECORD_VIDEO_MIN_SECOND, CustomCameraConfig.DEFAULT_MIN_RECORD_VIDEO);

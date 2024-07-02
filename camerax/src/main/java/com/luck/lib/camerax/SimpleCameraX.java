@@ -57,6 +57,8 @@ public class SimpleCameraX {
 
     public static final String EXTRA_AUTO_ROTATION = EXTRA_PREFIX + ".isAutoRotation";
 
+    public static final String EXTRA_MARKER_OPEN = EXTRA_PREFIX + ".isMarkOpen";
+
 
     private final Intent mCameraIntent;
 
@@ -330,6 +332,17 @@ public class SimpleCameraX {
      */
     public SimpleCameraX isZoomCameraPreview(boolean isZoom) {
         mCameraBundle.putBoolean(EXTRA_ZOOM_PREVIEW, isZoom);
+        return this;
+    }
+
+    /**
+     * 是否打开蒙层
+     *
+     * @param flag
+     * @return
+     */
+    public SimpleCameraX setMarkerOpen(Boolean flag) {
+        mCameraBundle.putBoolean(EXTRA_MARKER_OPEN, flag);
         return this;
     }
 

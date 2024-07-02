@@ -184,8 +184,8 @@ public class MainActivity extends AppCompatActivity implements IBridgePictureBeh
     private CheckBox cb_voice, cb_choose_mode, cb_isCamera, cb_isGif,
             cb_preview_img, cb_preview_video, cb_crop, cb_compress,
             cb_mode, cb_hide, cb_crop_circular, cb_styleCrop, cb_showCropGrid,
-            cb_showCropFrame, cb_preview_audio, cb_original, cb_single_back,
-            cb_custom_camera, cbPage, cbEnabledMask, cbEditor, cb_custom_sandbox, cb_only_dir,
+            cb_showCropFrame, cb_preview_audio, cb_original, cb_single_back, cb_front_camera,
+            cb_custom_camera, cb_marker_open, cbPage, cbEnabledMask, cbEditor, cb_custom_sandbox, cb_only_dir,
             cb_preview_full, cb_preview_scale, cb_inject_layout, cb_time_axis, cb_WithImageVideo,
             cb_system_album, cb_fast_select, cb_skip_not_gif, cb_not_gif, cb_attach_camera_mode,
             cb_attach_system_mode, cb_camera_zoom, cb_camera_focus, cb_query_sort_order, cb_watermark,
@@ -268,7 +268,9 @@ public class MainActivity extends AppCompatActivity implements IBridgePictureBeh
         cb_preview_audio = findViewById(R.id.cb_preview_audio);
         cb_original = findViewById(R.id.cb_original);
         cb_single_back = findViewById(R.id.cb_single_back);
+        cb_front_camera = findViewById(R.id.cb_front_camera);
         cb_custom_camera = findViewById(R.id.cb_custom_camera);
+        cb_marker_open = findViewById(R.id.cb_marker_open);
         cb_hide = findViewById(R.id.cb_hide);
         cb_not_gif = findViewById(R.id.cb_not_gif);
         cb_skip_not_gif = findViewById(R.id.cb_skip_not_gif);
@@ -1507,6 +1509,8 @@ public class MainActivity extends AppCompatActivity implements IBridgePictureBeh
             camera.isDisplayRecordChangeTime(true);
             camera.isManualFocusCameraPreview(cb_camera_focus.isChecked());
             camera.isZoomCameraPreview(cb_camera_zoom.isChecked());
+            camera.setCameraAroundState(cb_front_camera.isChecked());
+            camera.setMarkerOpen(cb_marker_open.isChecked());
             camera.setOutputPathDir(getSandboxCameraOutputPath());
             camera.setPermissionDeniedListener(getSimpleXPermissionDeniedListener());
             camera.setPermissionDescriptionListener(getSimpleXPermissionDescriptionListener());
